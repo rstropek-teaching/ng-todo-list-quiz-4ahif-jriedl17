@@ -1,0 +1,94 @@
+<div class="container-fluid">
+  <div style="text-align:center" class="jumbotron">
+    <h1>
+      Hello {{name}}!
+    </h1>
+    <h2>
+      Welcome to your ToDo-List!
+    </h2>
+    <label>Please Enter your Name:</label><input type="text" [(ngModel)]="name" id="currentUser">
+  </div>
+  <div class="panel panel-primary">
+    <div class="panel-heading">Filter</div>
+    <div id="Filter" style="text-align: center" class="container - fluid">
+      <form>
+        <input type="checkbox" id="getAllToDos" (click)="getAllToDos()" /> Get <b>all</b> ToDos <br>
+        <input type="checkbox" id="getUndoneToDos" (click)="getUndoneToDos()"> Get <b>undone</b> ToDos <br>
+        <input type="checkbox" id="getAssignedToDos" (click)="getAssignedToDos()"> Get <b>your</b> ToDos <br>
+      </form>
+    </div>
+  </div>
+  <div class="panel panel-primary">
+    <div class="panel-heading">ToDos <button class="glyphicon glyphicon-plus" style="float:right" (click)="showAdd();"></button></div>
+    <div id="list" style="text-align:center" class="container - fluid">
+      <table class="table table-bordered" id="ToDoTable">
+        <thead>
+          <th>ID</th>
+          <th>Assigend to</th>
+          <th>Description</th>
+          <th>Done</th>
+          <th>Delete</th>
+          <th>Update</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let toDo of toDos | async">
+            <td>{{ toDo.id }}</td>
+            <td>{{ toDo.assignedTo }}</td>
+            <td>{{ toDo.description }}</td>
+            <td>{{ toDo.done }}</td>
+            <td><button class="glyphicon glyphicon-trash" (click)="deleteToDo(toDo.id)"></button></td>
+            <td><button class="glyphicon glyphicon-edit" (click)="fillUpdateData(toDo.id, toDo.assignedTo, toDo.description, toDo.done)"></button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div id="edit" hidden="true">
+    <div class="panel panel-primary">
+      <div class="panel-heading">Edit <button class="glyphicon glyphicon-plus" style="float:right"></button></div>
+      <div id="list" style="text-align:center" class="container - fluid">
+        <table align="center">
+          <tr>
+            <td><label>ID: </label></td>
+            <td><input type="text" id="id" [(ngModel)]="currentTodo.id" readonly></td>
+          </tr>
+          <tr>
+            <td><label>Assigend To: </label></td>
+            <td><input type="text" [(ngModel)]="currentTodo.assignedTo" id="assignedTo"></td>
+          </tr>
+          <tr>
+            <td><label>Description: </label></td>
+            <td><input type="text" [(ngModel)]="currentTodo.description" id="description"></td>
+          </tr>
+          <tr>
+            <td><label>Done: </label></td>
+            <td><input type="checkbox" [(ngModel)]="currentTodo.done" id="done"></td>
+          </tr>
+        </table>
+        <button type="button" (click)="updateData();">Submit</button>
+      </div>
+    </div>
+  </div>
+  <div id="add" hidden="true">
+      <div class="panel panel-primary">
+        <div class="panel-heading">Add ToDo<button class="glyphicon glyphicon-plus" style="float:right"></button></div>
+        <div id="list" style="text-align:center" class="container - fluid">
+          <table align="center">
+            <tr>
+              <td><label>Assigend To: </label></td>
+              <td><input type="text" [(ngModel)]="toAddTodo.assignedTo" id="assignedTo"></td>
+            </tr>
+            <tr>
+              <td><label>Description: </label></td>
+              <td><input type="text" [(ngModel)]="toAddTodo.description" id="description"></td>
+            </tr>
+            <tr>
+              <td><label>Done: </label></td>
+              <td><input type="checkbox" [(ngModel)]="toAddTodo.done" id="done"></td>
+            </tr>
+          </table>
+          <button type="button" (click)="addTodo();">Submit</button>
+        </div>
+      </div>
+    </div>
+</div>
